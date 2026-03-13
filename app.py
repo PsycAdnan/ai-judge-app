@@ -194,25 +194,15 @@ async def roast(file: UploadFile = File(...)):
         print(f"Gemini API error: {error_str}")
 
         if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str:
-            # Fallback mock roast for rate limits
-            import random
-            fallbacks = [
-                {"verdict": "Main Character Syndrome", "roast": "You look like you practice arguments in the shower and still lose. Even the API needs a break from this energy.", "level": "Brutal"},
-                {"verdict": "Suspicious Vibes", "roast": "The AI hit a rate limit trying to process your aesthetic. It's either too much drip or not enough sleep.", "level": "Medium"},
-                {"verdict": "Peak NPC Energy", "roast": "I'd roast you, but the Google API decided you've suffered enough today. Better luck next time champ.", "level": "Mild"},
-                {"verdict": "Chaos Element", "roast": "You broke the AI's rate limit. Your vibe is officially too powerful for Google's servers to handle consecutively.", "level": "Medium"}
-            ]
-            result = random.choice(fallbacks)
-            print("Served fallback mock roast due to rate limits.")
+            detail = "Rate limit hit! The AI needs a breather. Wait 30 seconds and try again. 🫠"
         elif "API_KEY" in error_str or "401" in error_str or "403" in error_str:
             detail = "API key issue! Make sure GEMINI_API_KEY is set correctly in your .env file."
-            raise HTTPException(status_code=500, detail=detail)
         elif "not configured" in error_str:
             detail = "No API key found. Create a .env file with GEMINI_API_KEY=your_key_here"
-            raise HTTPException(status_code=500, detail=detail)
         else:
             detail = f"AI hiccup! Please try again in a moment. ({type(e).__name__})"
-            raise HTTPException(status_code=500, detail=detail)
+
+        raise HTTPException(status_code=500, detail=detail)
 
     return JSONResponse(
         {
