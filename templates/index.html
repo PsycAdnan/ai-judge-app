@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+    <title>AI Judge ⚖️ – Roast Me</title>
+    <meta name="description" content="Upload your photo and let the AI roast your vibe. Funny, safe, and shareable roasts powered by AI.">
+    <meta name="theme-color" content="#06060e">
+    <meta property="og:title" content="AI Judge ⚖️ – Roast Me">
+    <meta property="og:description" content="Upload your photo. Let the AI judge your vibe. Get a hilarious, meme-style roast!">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+</head>
+<body>
+    <div class="app">
+        <!-- Background effects -->
+        <div class="bg-particles" id="bgParticles"></div>
+        <div class="bg-grid"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-group">
+                <img src="/static/images/logo.svg" alt="AI Judge Logo" class="logo" width="44" height="44">
+                <div>
+                    <h1 class="title">AI Judge <span class="emoji">⚖️</span></h1>
+                </div>
+            </div>
+            <p class="subtitle">Upload your photo. Let the AI judge your vibe.</p>
+
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-dot green"></span>
+                    AI Online
+                </div>
+                <div class="stat-item">
+                    <span class="stat-dot purple"></span>
+                    Free to use
+                </div>
+                <div class="stat-item">
+                    <span class="stat-dot pink"></span>
+                    100% safe
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Upload Card -->
+            <div class="card upload-card" id="uploadCard">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">
+                        <div class="upload-icon-circle"></div>
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
+                    <p class="upload-text">Drop your selfie here</p>
+                    <p class="upload-hint">or tap to upload</p>
+                    <p class="upload-formats">📷 JPEG, PNG, WebP • Max 5MB</p>
+                    <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+                </div>
+
+                <!-- Image Preview -->
+                <div class="preview-container" id="previewContainer" style="display:none;">
+                    <img id="previewImage" class="preview-image" alt="Your uploaded photo">
+                    <button class="btn btn-remove" id="removeBtn" title="Remove photo">✕</button>
+                </div>
+
+                <button class="btn btn-primary btn-roast" id="roastBtn" disabled>
+                    <span class="btn-text">🔥 Roast Me</span>
+                    <span class="btn-loading" style="display:none;">
+                        <span class="spinner"></span> Judging...
+                    </span>
+                </button>
+            </div>
+
+            <!-- Loading Card -->
+            <div class="card loading-card" id="loadingCard" style="display:none;">
+                <div class="loading-animation">
+                    <div class="gavel-animation">⚖️</div>
+                    <p class="loading-text">The AI is studying your vibe...</p>
+                    <p class="loading-subtext">Preparing a verdict you didn't ask for</p>
+                    <div class="loading-bar">
+                        <div class="loading-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Card -->
+            <div class="card result-card" id="resultCard" style="display:none;">
+                <div class="result-photo-wrapper">
+                    <img id="resultImage" class="result-image" alt="Your roasted photo">
+                </div>
+
+                <div class="verdict-badge" id="verdictBadge">
+                    <span class="verdict-label">⚖️ VERDICT</span>
+                    <h2 class="verdict-title" id="verdictTitle"></h2>
+                </div>
+
+                <div class="roast-level-badge" id="roastLevelBadge">
+                    <span class="level-icon"></span>
+                    <span class="level-text" id="levelText"></span>
+                </div>
+
+                <p class="roast-text" id="roastText"></p>
+
+                <div class="result-actions">
+                    <button class="btn btn-action btn-download" id="downloadBtn">
+                        📥 Download
+                    </button>
+                    <button class="btn btn-action btn-share" id="shareBtn">
+                        📤 Share
+                    </button>
+                    <button class="btn btn-primary btn-again" id="roastAgainBtn">
+                        🔁 Roast Again
+                    </button>
+                </div>
+
+                <!-- Share dropdown -->
+                <div class="share-menu" id="shareMenu" style="display:none;">
+                    <button class="share-option" data-platform="whatsapp">
+                        <span class="share-icon">💬</span> WhatsApp
+                    </button>
+                    <button class="share-option" data-platform="twitter">
+                        <span class="share-icon">🐦</span> Twitter / X
+                    </button>
+                    <button class="share-option" data-platform="copy">
+                        <span class="share-icon">📋</span> Copy Text
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Toast -->
+            <div class="toast" id="toast" style="display:none;">
+                <span class="toast-icon">⚠️</span>
+                <span class="toast-text" id="toastText"></span>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made for laughs • AI‑powered roasts • No feelings were harmed 😄</p>
+        </footer>
+    </div>
+
+    <!-- Hidden canvas for meme generation -->
+    <canvas id="memeCanvas" style="display:none;"></canvas>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

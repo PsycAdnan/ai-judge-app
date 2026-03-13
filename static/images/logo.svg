@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="gavel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#ec4899"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Circle background -->
+  <circle cx="60" cy="60" r="56" fill="#1a1a2e" stroke="url(#gavel-grad)" stroke-width="3"/>
+  <!-- Scale/Balance icon -->
+  <g filter="url(#glow)">
+    <!-- Center pillar -->
+    <rect x="57" y="35" width="6" height="45" rx="3" fill="url(#gavel-grad)"/>
+    <!-- Base -->
+    <rect x="40" y="76" width="40" height="6" rx="3" fill="url(#gavel-grad)"/>
+    <!-- Top beam -->
+    <rect x="25" y="33" width="70" height="5" rx="2.5" fill="url(#gavel-grad)"/>
+    <!-- Left pan -->
+    <path d="M25 38 L20 55 Q20 60 30 60 Q40 60 40 55 L35 38" fill="url(#gavel-grad)" opacity="0.7"/>
+    <!-- Right pan -->
+    <path d="M85 38 L80 50 Q80 55 90 55 Q100 55 100 50 L95 38" fill="url(#gavel-grad)" opacity="0.7"/>
+    <!-- Left strings -->
+    <line x1="25" y1="38" x2="20" y2="55" stroke="url(#gavel-grad)" stroke-width="1.5"/>
+    <line x1="35" y1="38" x2="40" y2="55" stroke="url(#gavel-grad)" stroke-width="1.5"/>
+    <!-- Right strings -->
+    <line x1="85" y1="38" x2="80" y2="50" stroke="url(#gavel-grad)" stroke-width="1.5"/>
+    <line x1="95" y1="38" x2="100" y2="50" stroke="url(#gavel-grad)" stroke-width="1.5"/>
+  </g>
+  <!-- AI text -->
+  <text x="60" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="800" fill="#a855f7">AI</text>
+</svg>
